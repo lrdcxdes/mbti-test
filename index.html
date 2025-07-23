@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Система Калибровки Личности</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main class="app-container">
+
+        <!-- ЭКРАН 1: ПРИВЕТСТВИЕ -->
+        <section id="welcome-screen" class="screen active">
+            <div class="content-wrapper">
+                <h1 class="title">Система Калибровки</h1>
+                <p class="subtitle">Это не просто тест. Это анализ фундаментальных процессов вашего мышления для определения вашего когнитивного архетипа.</p>
+                <button id="start-instruction-btn" class="main-action-btn">Начать калибровку</button>
+            </div>
+        </section>
+
+        <!-- ЭКРАН 2: ИНСТРУКТАЖ -->
+        <section id="instruction-screen" class="screen">
+            <div class="content-wrapper">
+                 <div id="instruction-content">
+                    <!-- Содержимое инструкций будет генерироваться JS -->
+                 </div>
+                 <button id="next-instruction-btn" class="main-action-btn">Далее</button>
+            </div>
+        </section>
+
+        <!-- ЭКРАН 3: КВИЗ -->
+        <section id="quiz-screen" class="screen">
+            <div class="quiz-header">
+                <div id="progress-container">
+                    <div id="progress-bar"></div>
+                </div>
+                <span id="progress-text"></span>
+            </div>
+            <div class="quiz-body">
+                <h2 id="question"></h2>
+                <div id="answer-buttons"></div>
+            </div>
+            <div class="quiz-navigation">
+                <button id="back-btn" class="nav-btn">Назад</button>
+            </div>
+        </section>
+
+        <!-- ЭКРАН 4: АНАЛИЗ (ЗАГРУЗКА) -->
+        <section id="loading-screen" class="screen">
+             <div class="content-wrapper">
+                <div class="spinner"></div>
+                <p class="loading-text">Анализ когнитивных функций...</p>
+            </div>
+        </section>
+
+        <!-- ЭКРАН 5: РЕЗУЛЬТАТ -->
+        <section id="result-screen" class="screen">
+            <div class="result-wrapper">
+                <p class="result-archetype-label">Ваш архетип</p>
+                <h1 id="mbti-type-title" class="result-title"></h1>
+                <p id="mbti-archetype" class="result-archetype"></p>
+
+                <div class="result-tabs">
+                    <button class="tab-btn active" data-tab="description">Описание</button>
+                    <button class="tab-btn" data-tab="functions">Функции</button>
+                    <button class="tab-btn" data-tab="strengths">Сильные стороны</button>
+                    <button class="tab-btn" data-tab="growth">Зоны роста</button>
+                </div>
+
+                <div id="result-content" class="result-content-container">
+                    <!-- Содержимое будет генерироваться JS -->
+                </div>
+
+                <div class="result-actions">
+                     <button id="review-answers-btn" class="secondary-action-btn">Проверить ответы</button>
+                     <button id="restart-btn" class="main-action-btn">Пройти заново</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ЭКРАН 6: РЕДАКТИРОВАНИЕ ОТВЕТОВ -->
+        <section id="review-screen" class="screen">
+            <div class="review-wrapper">
+                <h1 class="review-title">Редактирование ответов</h1>
+                <p class="review-subtitle">Вы можете изменить свои выборы и пересчитать результат.</p>
+                <div id="review-list"></div>
+                <div class="review-actions">
+                    <button id="back-to-result-btn" class="secondary-action-btn">Назад к результату</button>
+                    <button id="recalculate-btn" class="main-action-btn">Пересчитать</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="questions.js"></script>
+    <script src="descriptions.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

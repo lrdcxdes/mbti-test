@@ -1,0 +1,188 @@
+/* --- Импорт шрифта и базовый сброс --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* --- Цветовая схема: Light & Professional --- */
+:root {
+    --bg-color: #f5f5f7;
+    --container-color: #ffffff;
+    --primary-text-color: #1d1d1f;
+    --secondary-text-color: #6e6e73;
+    --accent-color: #007aff;
+    --border-color: #d2d2d7;
+    --button-secondary-bg: #e5e5e5;
+}
+
+/* --- Основной лэйаут --- */
+body {
+    background: var(--bg-color);
+    color: var(--primary-text-color);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* РЕШЕНИЕ ПРОБЛЕМЫ "БЕЛОГО ЭКРАНА":
+   Используем динамические единицы высоты вьюпорта (dvh) для мобильных устройств.
+   Это гарантирует, что контейнер займет весь экран, учитывая динамическое появление/исчезновение панелей браузера.
+   border-radius по умолчанию равен 0. Он будет добавлен только для десктопов.
+*/
+.app-container {
+    width: 100%;
+    height: 100vh; /* Fallback для старых браузеров */
+    height: 100dvh; /* Корректная высота для мобильных */
+    background: var(--container-color);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: width 0.3s ease, height 0.3s ease, border-radius 0.3s ease; /* Плавность для адаптива */
+}
+
+/* --- Экраны и контент --- */
+.screen {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+    display: flex;
+    flex-direction: column;
+    padding: 40px 25px 30px 25px; /* Увеличен нижний отступ */
+}
+
+.screen.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.content-wrapper, .result-wrapper, .review-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-grow: 1;
+}
+
+/* --- Типографика --- */
+.title { font-size: 32px; font-weight: 700; }
+.subtitle { font-size: 16px; color: var(--secondary-text-color); margin-top: 15px; line-height: 1.5; max-width: 320px; }
+#question { font-size: 22px; font-weight: 600; margin-bottom: 30px; line-height: 1.4; text-align: center; }
+
+/* --- Кнопки --- */
+.main-action-btn, .secondary-action-btn, .nav-btn {
+    padding: 16px;
+    border-radius: 12px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    flex-shrink: 0;
+}
+.main-action-btn:active, .secondary-action-btn:active, .answer-btn:active {
+    transform: scale(0.98); /* РЕШЕНИЕ 5: Тактильный отклик */
+}
+.main-action-btn { background: var(--accent-color); color: white; }
+.main-action-btn:hover { background-color: #006adc; }
+.secondary-action-btn { background: var(--button-secondary-bg); color: var(--primary-text-color); }
+.secondary-action-btn:hover { background-color: #d8d8d8; }
+
+/* РЕШЕНИЕ 1: Геометрия кнопок */
+.result-actions, .review-actions {
+    width: 100%;
+    margin-top: auto;
+    padding-top: 20px;
+    display: flex;
+    gap: 15px;
+}
+.result-actions .main-action-btn, .result-actions .secondary-action-btn,
+.review-actions .main-action-btn, .review-actions .secondary-action-btn {
+    flex: 1; /* Кнопки теперь всегда имеют равную ширину внутри flex-контейнера */
+}
+
+/* --- Стилизация квиза --- */
+.quiz-header { padding: 10px 0; }
+#progress-container { width: 100%; background: #e5e5e5; border-radius: 5px; height: 6px; }
+#progress-bar { width: 0%; height: 100%; background: var(--accent-color); border-radius: 5px; transition: width 0.4s ease; }
+#progress-text { font-size: 14px; color: var(--secondary-text-color); text-align: center; margin-top: 10px; }
+.quiz-body { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
+#answer-buttons { width: 100%; }
+.answer-btn {
+    width: 100%;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+    background: var(--bg-color);
+    color: var(--primary-text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    text-align: left;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+}
+.answer-btn:hover { background-color: #e9e9ed; }
+.answer-btn.selected {
+    background: rgba(0, 122, 255, 0.1);
+    border-color: var(--accent-color);
+    font-weight: 500;
+}
+.quiz-navigation { margin-top: 20px; }
+.nav-btn { background: var(--button-secondary-bg); color: var(--primary-text-color); font-weight: 500; width: 100%; }
+.nav-btn:disabled { opacity: 0.5; cursor: not-allowed; background-color: #f0f0f0; }
+
+/* --- Результаты и табы --- */
+.result-wrapper { justify-content: flex-start; }
+.result-archetype-label { color: var(--accent-color); font-weight: 600; font-size: 16px; }
+.result-title { font-size: 48px; margin: 5px 0; }
+.result-archetype { font-size: 20px; color: var(--secondary-text-color); margin-bottom: 30px; }
+.result-tabs { display: flex; width: 100%; border-bottom: 1px solid var(--border-color); margin-bottom: 20px; }
+.tab-btn { flex: 1; padding: 15px 5px; background: none; border: none; color: var(--secondary-text-color); font-size: 15px; font-weight: 500; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s ease; }
+.tab-btn.active { color: var(--accent-color); border-bottom-color: var(--accent-color); }
+.result-content-container { text-align: left; line-height: 1.6; font-size: 15px; width: 100%; }
+
+/* --- Экран редактирования --- */
+.review-wrapper { justify-content: flex-start; }
+.review-title { font-size: 28px; width: 100%; text-align: left; }
+.review-subtitle { font-size: 15px; color: var(--secondary-text-color); width: 100%; text-align: left; margin-top: 10px; margin-bottom: 25px; }
+#review-list { width: 100%; max-height: calc(100vh - 250px); /* Адаптивная высота списка */ overflow-y: auto; padding-right: 10px; }
+.review-item { margin-bottom: 20px; }
+.review-question { font-size: 15px; font-weight: 600; text-align: left; margin-bottom: 10px; }
+.review-answer-btn { width: 100%; padding: 12px 15px; margin-bottom: 8px; background: var(--container-color); color: var(--primary-text-color); border: 1px solid var(--border-color); border-radius: 8px; text-align: left; font-size: 14px; cursor: pointer; transition: all 0.2s ease; }
+.review-answer-btn:hover { background: #f5f5f7; }
+.review-answer-btn.selected { background: rgba(0, 122, 255, 0.1); border-color: var(--accent-color); color: var(--primary-text-color); }
+
+
+/* --- РЕШЕНИЕ 4: АДАПТИВНОСТЬ --- */
+@media (min-width: 768px) {
+    .app-container {
+        width: auto; /* Ширина по содержимому, но ограничена max-width */
+        height: auto; /* Высота по содержимому, но ограничена max-height */
+        min-width: 700px;
+        max-width: 800px;
+        min-height: 700px;
+        max-height: 90vh; /* Ограничение по высоте, чтобы не выходить за рамки экрана */
+        border-radius: 24px; /* Возвращаем скругление для десктопов */
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+        border: 1px solid var(--border-color);
+    }
+    .screen { padding: 50px 60px; }
+    .title { font-size: 40px; }
+    #question { font-size: 26px; max-width: 90%; margin-left: auto; margin-right: auto; }
+    #answer-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .answer-btn { margin-bottom: 0; }
+    .result-actions, .review-actions { max-width: 500px; margin-left: auto; margin-right: auto; }
+}
