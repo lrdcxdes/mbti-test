@@ -155,10 +155,17 @@ body {
 .result-content-container { text-align: left; line-height: 1.6; font-size: 15px; width: 100%; }
 
 /* --- Экран редактирования --- */
-.review-wrapper { justify-content: flex-start; }
+.review-wrapper {
+    justify-content: flex-start;
+    height: 100%; /* Убедимся, что обертка занимает всю высоту */
+}
 .review-title { font-size: 28px; width: 100%; text-align: left; }
 .review-subtitle { font-size: 15px; color: var(--secondary-text-color); width: 100%; text-align: left; margin-top: 10px; margin-bottom: 25px; }
-#review-list { width: 100%; max-height: calc(100vh - 250px); /* Адаптивная высота списка */ overflow-y: auto; padding-right: 10px; }
+#review-list { width: 100%; flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-bottom: 20px; /* Добавим отступ от нижних кнопок */
+}
 .review-item { margin-bottom: 20px; }
 .review-question { font-size: 15px; font-weight: 600; text-align: left; margin-bottom: 10px; }
 .review-answer-btn { width: 100%; padding: 12px 15px; margin-bottom: 8px; background: var(--container-color); color: var(--primary-text-color); border: 1px solid var(--border-color); border-radius: 8px; text-align: left; font-size: 14px; cursor: pointer; transition: all 0.2s ease; }
